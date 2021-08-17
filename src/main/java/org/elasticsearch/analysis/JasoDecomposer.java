@@ -99,6 +99,12 @@ public class JasoDecomposer {
                     }
                 } else {
 
+                    if (chosungBuffer.length() > 0) {
+                        returnBuffer.append(chosungBuffer);
+                        chosungBuffer = new StringBuffer();
+                        returnBuffer.append(" ");
+                    }
+
                     if (options.isMistype()) {
                         if (!jaso) {
                             if (hangul) {

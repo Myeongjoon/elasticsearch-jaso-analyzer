@@ -26,7 +26,7 @@ public class JasoTokenizerTest extends TestCase {
         options.setMistype(false);
 
         //초성검색을 위한 토큰 추출여부 (최일규 -> ㅊㅇㄱ)
-        options.setChosung(false);
+        options.setChosung(true);
 
         List<TestCaseVO> testCase = new ArrayList<TestCaseVO>();
 
@@ -56,8 +56,8 @@ public class JasoTokenizerTest extends TestCase {
             testCase.add(new TestCaseVO("소녀시대", "ㅅㅗㄴㅕㅅㅣㄷㅐ/ㅅㄴㅅㄷ"));
             testCase.add(new TestCaseVO("Hello", "hello"));
             testCase.add(new TestCaseVO("Hello~", "hello~"));
-            testCase.add(new TestCaseVO("무조건 해피엔딩", "ㅁㅜㅈㅗㄱㅓㄴㅎㅐㅍㅣㅇㅔㄴㄷㅣㅇ/ㅁㅜㅈㅗㄱㅓㄴ/ㅎㅐㅍㅣㅇㅔㄴㄷㅣㅇ/ㅁㅈㄱㅎㅍㅇㄷ"));
-            testCase.add(new TestCaseVO("아디다스 운동화", "ㅇㅏㄷㅣㄷㅏㅅㅡㅇㅜㄴㄷㅗㅇㅎㅗㅏ/ㅇㅏㄷㅣㄷㅏㅅㅡ/ㅇㅜㄴㄷㅗㅇㅎㅗㅏ/ㅇㄷㄷㅅㅇㄷㅎ"));
+            testCase.add(new TestCaseVO("무조건 해피엔딩", "ㅁㅈㄱ/ㅁㅜㅈㅗㄱㅓㄴㅎㅐㅍㅣㅇㅔㄴㄷㅣㅇ/ㅁㅜㅈㅗㄱㅓㄴ/ㅎㅐㅍㅣㅇㅔㄴㄷㅣㅇ/ㅎㅍㅇㄷ"));
+            testCase.add(new TestCaseVO("아디다스 운동화", "ㅇㄷㄷㅅ/ㅇㅏㄷㅣㄷㅏㅅㅡㅇㅜㄴㄷㅗㅇㅎㅗㅏ/ㅇㅏㄷㅣㄷㅏㅅㅡ/ㅇㅜㄴㄷㅗㅇㅎㅗㅏ/ㅇㄷㅎ"));
             testCase.add(new TestCaseVO("투데이특가", "ㅌㅜㄷㅔㅇㅣㅌㅡㄱㄱㅏ/ㅌㄷㅇㅌㄱ"));
 
         } else if (options.isMistype() == false && options.isChosung() == false) {

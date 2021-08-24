@@ -22,8 +22,7 @@ $ gradle build buildPluginZip
 
 그러면 아래의 두개의 path에 jar와 zip파일이 생성된다.
 
-build/distributions
-
-build/libs
+ - build/distributions
+ - build/libs
 
 

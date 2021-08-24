@@ -15,6 +15,7 @@ elasticsearch-plugin.bat install "http://192.168.105.92/myeongjoon_kim/elasticse
 ```
 bin/elasticsearch-plugin remove jaso-analyzer
 ```
+위의 명령어시에 파일이 없다고 에러가 뜨면 플러그인이 설치가 안되어 있거나, 직접 폴더를 찾아서 삭제해야 한다.
 
 
 ## 빌드

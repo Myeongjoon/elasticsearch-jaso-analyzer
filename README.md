@@ -1,3 +1,7 @@
+###### *개요*
+
+엘라스틱 서치에서 한국어 초성 검색, 한영 변환 기능들을 지원하기 위한 플러그인 입니다.
+
 원본 오픈소스 :  https://github.com/netcrazy/elasticsearch-jaso-analyzer
 
 위의 오픈소스에서 white space가 초성 기능에 적용되지 않는 버그를 수정하였습니다.

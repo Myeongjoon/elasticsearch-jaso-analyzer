@@ -27,3 +27,60 @@ $ gradle build buildPluginZip
 
 나오는 jar파일을 zip파일에 넣고 위의 설치 명령어를 통해서 플러그인을 설치 한다. 이때 path는 "file///파일 위치" 로 설정해주면 된다.
 
+
+###### *자소 검색 인덱스 설정하기*
+```
+curl -XPUT -H 'Content-Type: application/json' localhost:9200/jaso/ -d '{
+    "settings": {
+        "index": {
+            "analysis": {
+                "filter": {
+                    "char_filter": {
+                        "type": "pattern_replace",
+                        "pattern": "\\p{Punct}|\\d",
+                        "replacement": ""
+                    },
+                    "suggest_filter": {
+                        "type": "edge_ngram",
+                        "min_gram": 1,
+                        "max_gram": 50,
+                        "token_chars": [
+                            "letter",
+                            "digit"
+                        ]
+                    }
+                },
+                "tokenizer": {
+                    "jaso_search_tokenizer": {
+                        "type": "jaso_tokenizer",
+                        "mistype": true,
+                        "chosung": false
+                    },
+                    "jaso_index_tokenizer": {
+                        "type": "jaso_tokenizer",
+                        "mistype": true,
+                        "chosung": true
+                    }
+                },
+                "analyzer": {
+                    "suggest_search_analyzer": {
+                        "type": "custom",
+                        "tokenizer": "jaso_search_tokenizer",
+                        "filter": [
+                            "char_filter"
+                        ]
+                    },
+                    "suggest_index_analyzer": {
+                        "type": "custom",
+                        "tokenizer": "jaso_index_tokenizer",
+                        "filter": [
+                            "suggest_filter",
+                            "char_filter"
+                        ]
+                    }
+                }
+            }
+        }
+    }
+}'
+```

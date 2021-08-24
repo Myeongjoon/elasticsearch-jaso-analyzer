@@ -7,6 +7,7 @@
 위의 오픈소스에서 white space가 초성 기능에 적용되지 않는 버그를 수정하였습니다.
 
 ## 설치
+설치시에는 엘라스틱 서치가 실행되어 있으면 에러가 발생할 수 있다. 
 ```
 elasticsearch-plugin.bat install "http://192.168.105.92/myeongjoon_kim/elasticsearch-jaso-analyzer/uploads/88857e8ca1d56d0e6190901bba0b0e96/jaso-analyzer-plugin-7.8.0-plugin.zip"
 ```

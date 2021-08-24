@@ -29,8 +29,9 @@ $ gradle build buildPluginZip
 
 
 ###### *자소 검색 인덱스 설정하기*
+아래와 같이 인덱스를 생성 합니다. 
 ```
-curl -XPUT -H 'Content-Type: application/json' localhost:9200/jaso/ -d '{
+{
     "settings": {
         "index": {
             "analysis": {
@@ -82,5 +83,5 @@ curl -XPUT -H 'Content-Type: application/json' localhost:9200/jaso/ -d '{
             }
         }
     }
-}'
+}
 ```

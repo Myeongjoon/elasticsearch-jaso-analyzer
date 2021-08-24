@@ -4,7 +4,7 @@
 
 ###### *설치*
 ```
-bin/elasticsearch-plugin install file:///플러그인 위치
+elasticsearch-plugin.bat install "http://192.168.105.92/myeongjoon_kim/elasticsearch-jaso-analyzer/uploads/88857e8ca1d56d0e6190901bba0b0e96/jaso-analyzer-plugin-7.8.0-plugin.zip"
 ```
 
 ###### *삭제 (필요시)*

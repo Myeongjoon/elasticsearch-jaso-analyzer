@@ -93,6 +93,7 @@ $ gradle build buildPluginZip
 ```
 
 mapping은 다음과 같이 입력 합니다.
+초성 검색이 필요한 필드에 다음과 같이 입력합니다. 아래의 예시는 msg_body 필드에 초성 검색을 지원 합니다. 
 
 ```
 {

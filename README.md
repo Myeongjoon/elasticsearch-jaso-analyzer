@@ -36,6 +36,7 @@ $ gradle build buildPluginZip
 
 ## 자소 검색 인덱스 설정하기
 아래와 같이 인덱스를 생성 합니다. 
+만약 초성 or 한영 기능이 필요 없다면, chosung이나 mistype를 false로 바꾸면 됩니다.
 ```
 {
     "settings": {

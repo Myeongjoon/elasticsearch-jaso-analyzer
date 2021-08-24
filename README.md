@@ -25,4 +25,5 @@ $ gradle build buildPluginZip
  - build/distributions
  - build/libs
 
+나오는 jar파일을 zip에 넣고 다시 압축한다 해당 파일을 통해서 플러그인을 설치 한다. 
 

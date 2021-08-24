@@ -1,4 +1,4 @@
-## *개요*
+## 개요
 
 엘라스틱 서치에서 한국어 초성 검색, 한영 변환 기능들을 지원하기 위한 플러그인 입니다.
 
@@ -6,12 +6,12 @@
 
 위의 오픈소스에서 white space가 초성 기능에 적용되지 않는 버그를 수정하였습니다.
 
-## *설치*
+## 설치
 ```
 elasticsearch-plugin.bat install "http://192.168.105.92/myeongjoon_kim/elasticsearch-jaso-analyzer/uploads/88857e8ca1d56d0e6190901bba0b0e96/jaso-analyzer-plugin-7.8.0-plugin.zip"
 ```
 
-## *삭제 (필요시)*
+## 삭제 (필요시)
 ```
 bin/elasticsearch-plugin remove jaso-analyzer
 ```
@@ -32,7 +32,7 @@ $ gradle build buildPluginZip
 나오는 jar파일을 zip파일에 넣고 위의 설치 명령어를 통해서 플러그인을 설치 한다. 이때 path는 "file///파일 위치" 로 설정해주면 된다.
 
 
-## *자소 검색 인덱스 설정하기*
+## 자소 검색 인덱스 설정하기
 아래와 같이 인덱스를 생성 합니다. 
 ```
 {

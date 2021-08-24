@@ -25,5 +25,5 @@ $ gradle build buildPluginZip
  - build/distributions
  - build/libs
 
-나오는 zip파일 통해서 위의 명령어를 실행하고 엘라스틱 서치 플러그인 lib 위치에 jar파일을 집어 넣는다.
+나오는 jar파일을 zip파일에 넣고 위의 설치 명령어를 통해서 플러그인을 설치 한다. 이때 path는 "file///파일 위치" 로 설정해주면 된다.
 

@@ -85,3 +85,18 @@ $ gradle build buildPluginZip
     }
 }
 ```
+
+mapping은 다음과 같이 입력 합니다.
+
+```
+{
+  "properties": {
+    "msg_body": {
+      "type": "text",
+      "store": true,
+      "analyzer": "suggest_index_analyzer",
+      "search_analyzer": "suggest_search_analyzer"
+    }
+  }
+}
+```

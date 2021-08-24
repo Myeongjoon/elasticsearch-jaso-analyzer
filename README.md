@@ -14,6 +14,7 @@ bin/elasticsearch-plugin remove jaso-analyzer
 
 
 ## 빌드
+만약 코드를 변경하거나 elastic search등의 버전 변경이 필요하면 아래 명령어를 통해서 재 빌드 한다.
 
 ~~~shell
 $ gradle build buildPluginZip

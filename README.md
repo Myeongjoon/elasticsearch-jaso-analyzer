@@ -11,3 +11,10 @@ bin/elasticsearch-plugin install file:///플러그인 위치
 ```
 bin/elasticsearch-plugin remove jaso-analyzer
 ```
+
+
+## 빌드
+
+~~~shell
+$ gradle build buildPluginZip
+~~~

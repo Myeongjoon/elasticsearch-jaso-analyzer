@@ -8,9 +8,21 @@
 
 ## 설치
 설치시에는 엘라스틱 서치가 실행되어 있으면 에러가 발생할 수 있다. 
+
+7.8.0 버전
+
 ```
 bin/elasticsearch-plugin.bat install "http://192.168.105.92/myeongjoon_kim/elasticsearch-jaso-analyzer/uploads/88857e8ca1d56d0e6190901bba0b0e96/jaso-analyzer-plugin-7.8.0-plugin.zip"
 ```
+
+7.13.3 버전
+
+```
+bin/elasticsearch-plugin.bat install "http://192.168.105.92/myeongjoon_kim/elasticsearch-jaso-analyzer/uploads/87ade080d9d3336682b9f9600214b9e3/jaso-analyzer-plugin-7.13.3-plugin.zip"
+```
+
+
+
 
 ## 삭제 (필요시)
 ```

@@ -6,6 +6,11 @@
 
 위의 오픈소스에서 white space가 초성 기능에 적용되지 않는 버그를 수정하였습니다.
 
+## 참고
+아래의 명령어들은 엘라스틱 서치가 설치된 폴더의 bin 폴더 실행파일을 기준으로 합니다.
+
+윈도우 일 경우는 elasticsearch-plugin.bat을 기준으로 하고 리눅스일 경우 elasticsearch-plugin를 기준으로 합니다.
+
 ## 설치
 설치시에는 엘라스틱 서치가 실행되어 있으면 에러가 발생할 수 있습니다. 그런 경우는 프로세스를 꺼야 합니다.
 
@@ -26,7 +31,7 @@ bin/elasticsearch-plugin.bat install "http://192.168.105.92/myeongjoon_kim/elast
 
 ## 삭제 (필요시)
 ```
-bin/elasticsearch-plugin remove jaso-analyzer
+bin/elasticsearch-plugin.bat remove jaso-analyzer
 ```
 위의 명령어시에 파일이 없다고 에러가 뜨면 플러그인이 설치가 안되어 있거나, jaso 플러그인이 설치된 폴더를 찾아서 삭제해야 합니다.
 

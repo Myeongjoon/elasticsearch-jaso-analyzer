@@ -7,7 +7,7 @@
 위의 오픈소스에서 white space가 초성 기능에 적용되지 않는 버그를 수정하였습니다.
 
 ## 설치
-설치시에는 엘라스틱 서치가 실행되어 있으면 에러가 발생할 수 있다. 
+설치시에는 엘라스틱 서치가 실행되어 있으면 에러가 발생할 수 있습니다. 그런 경우는 프로세스를 꺼야 합니다.
 
 7.8.0 버전
 
@@ -28,11 +28,11 @@ bin/elasticsearch-plugin.bat install "http://192.168.105.92/myeongjoon_kim/elast
 ```
 bin/elasticsearch-plugin remove jaso-analyzer
 ```
-위의 명령어시에 파일이 없다고 에러가 뜨면 플러그인이 설치가 안되어 있거나, 직접 폴더를 찾아서 삭제해야 한다.
+위의 명령어시에 파일이 없다고 에러가 뜨면 플러그인이 설치가 안되어 있거나, jaso 플러그인이 설치된 폴더를 찾아서 삭제해야 합니다.
 
 
 ## 빌드
-만약 코드를 변경하거나 elastic search등의 버전 변경이 필요하면 아래 명령어를 통해서 재 빌드 한다.
+만약 코드를 변경하거나 elastic search등의 버전 변경이 필요하면 아래 명령어를 통해서 재 빌드 해야합니다.
 
 ~~~shell
 $ gradle build buildPluginZip

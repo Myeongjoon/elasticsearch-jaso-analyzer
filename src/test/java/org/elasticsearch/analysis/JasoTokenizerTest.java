@@ -52,7 +52,7 @@ public class JasoTokenizerTest extends TestCase {
 
         } else if (options.isMistype() == false && options.isChosung() == true) {
 
-            testCase.add(new TestCaseVO("최일규", "ㅊㅗㅣㅇㅣㄹㄱㅠ/ㅊㅇㄱ"));
+            testCase.add(new TestCaseVO("최일규", "ㅊㅗㅣㅇㅣㄹㄱㅠ/ㅊㅇㄱ", "0,3/0,3"));
             testCase.add(new TestCaseVO("소녀시대", "ㅅㅗㄴㅕㅅㅣㄷㅐ/ㅅㄴㅅㄷ"));
             testCase.add(new TestCaseVO("Hello", "hello"));
             testCase.add(new TestCaseVO("Hello~", "hello~"));
@@ -87,6 +87,7 @@ public class JasoTokenizerTest extends TestCase {
             while (tokenizer.incrementToken()) {
                 if (sb.length() > 0) sb.append('/');
                 sb.append(termAtt.toString());
+                //offset 비교
             }
 
             TestCase.assertEquals(vo.getCompare(), sb.toString());

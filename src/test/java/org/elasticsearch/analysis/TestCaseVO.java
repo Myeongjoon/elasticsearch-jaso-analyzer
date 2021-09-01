@@ -10,10 +10,17 @@ public class TestCaseVO {
 
     private String origin;
     private String compare;
+    private String offset;
 
     public TestCaseVO(String origin, String compare) {
         this.origin = origin;
         this.compare = compare;
+    }
+
+    public TestCaseVO(String origin, String compare, String offset) {
+        this.origin = origin;
+        this.compare = compare;
+        this.offset = offset;
     }
 
     public String getOrigin() {
@@ -22,5 +29,9 @@ public class TestCaseVO {
 
     public String getCompare() {
         return compare;
+    }
+
+    public String getOffset() {
+        return offset;
     }
 }

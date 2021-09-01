@@ -3,6 +3,7 @@ package org.elasticsearch.analysis;
 import junit.framework.TestCase;
 import org.apache.lucene.analysis.Tokenizer;
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
+import org.apache.lucene.analysis.tokenattributes.OffsetAttribute;
 
 import java.io.IOException;
 import java.io.StringReader;
@@ -84,12 +85,22 @@ public class JasoTokenizerTest extends TestCase {
 
             StringBuffer sb = new StringBuffer();
 
+            StringBuilder offset = new StringBuilder();
+
             while (tokenizer.incrementToken()) {
                 if (sb.length() > 0) sb.append('/');
                 sb.append(termAtt.toString());
-                //offset 비교
+                if (vo.getOffset() != null) {
+                    OffsetAttribute offsetAtt = tokenizer.addAttribute(OffsetAttribute.class);
+                    //offset 비교
+                    if (offset.length() > 0) offset.append("/");
+                    offset.append(offsetAtt.startOffset()).append(",").append(offsetAtt.endOffset());
+                }
             }
 
+            if (vo.getOffset() != null) {
+                TestCase.assertEquals(vo.getOffset(), offset.toString());
+            }
             TestCase.assertEquals(vo.getCompare(), sb.toString());
             tokenizer.close();
 

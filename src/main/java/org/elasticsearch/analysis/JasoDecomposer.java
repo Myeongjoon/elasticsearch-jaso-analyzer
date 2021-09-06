@@ -111,6 +111,22 @@ public class JasoDecomposer {
         }
     }
 
+    private void decomposeEtc(char ch, StringBuffer etcBuffer) {
+        //Unicode 값으로 환산한다.
+        int uniValue = ch - 0xAC00;
+
+        int jong = uniValue % 28;                   //종성
+        int cho = ((uniValue - jong) / 28) / 21;    //초성
+        int jung = ((uniValue - jong) / 28) % 21;   //중성
+
+        etcBuffer.append(chosungKor[cho]);
+        etcBuffer.append(jungsungKor[jung]);
+        //받침이 있으면
+        if (jong != 0) {
+            etcBuffer.append(jongsungKor[jong]);
+        }
+    }
+
     private boolean checkKor(char ch) {
         return ch >= 0xAC00 && ch <= 0xD7A3;
     }
@@ -159,21 +175,8 @@ public class JasoDecomposer {
 
                 //추가적인 예외상황으로 추가 토큰처리 (ㅗ디ㅣㅐ -> ㅗㄷㅣㅣㅐ 자소분해)
                 if (jaso) {
-
                     if (checkKor(ch)) {
-                        //Unicode 값으로 환산한다.
-                        int uniValue = ch - 0xAC00;
-
-                        jong = uniValue % 28;                   //종성
-                        cho = ((uniValue - jong) / 28) / 21;    //초성
-                        jung = ((uniValue - jong) / 28) % 21;   //중성
-
-                        etcBuffer.append(chosungKor[cho]);
-                        etcBuffer.append(jungsungKor[jung]);
-                        //받침이 있으면
-                        if (jong != 0) {
-                            etcBuffer.append(jongsungKor[jong]);
-                        }
+                        decomposeEtc(ch, etcBuffer);
                     } else if (isJaso(Character.toString(ch))) {
                         //복자음 강제분리
                         switch (ch) {

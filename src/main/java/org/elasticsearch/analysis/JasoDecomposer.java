@@ -102,10 +102,6 @@ public class JasoDecomposer {
 
                 //가(AC00)~힣(D7A3) 에 속한 글자면 분해
                 if (ch >= 0xAC00 && ch <= 0xD7A3 && !jaso) {
-                    int uniValue = ch - 0xAC00;
-                    jong = uniValue % 28;                   //종성
-                    cho = ((uniValue - jong) / 28) / 21;    //초성
-                    jung = ((uniValue - jong) / 28) % 21;   //중성
                     decomposeKor(ch, korBuffer, chosungBuffer, options, engBuffer, strLen, firstCharType);
                 } else {
                     //white space인 경우 분리

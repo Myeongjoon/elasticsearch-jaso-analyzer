@@ -24,7 +24,7 @@ public class JasoTokenizerTest extends TestCase {
         TokenizerOptions options = TokenizerOptions.create("testTokenizer");
 
         //한영오타에 대한 토큰 추출여부 (hello -> ㅗㄷㅣㅣㅐ, 최일규 -> chldlfrb)
-        options.setMistype(false);
+        options.setMistype(true);
 
         //초성검색을 위한 토큰 추출여부 (최일규 -> ㅊㅇㄱ)
         options.setChosung(true);
@@ -37,8 +37,8 @@ public class JasoTokenizerTest extends TestCase {
             testCase.add(new TestCaseVO("소녀시대", "ㅅㅗㄴㅕㅅㅣㄷㅐ/thsutleo/ㅅㄴㅅㄷ"));
             testCase.add(new TestCaseVO("Hello", "hello/ㅗㄷㅣㅣㅐ"));
             testCase.add(new TestCaseVO("Hello~", "hello~/ㅗㄷㅣㅣㅐ~"));
-            testCase.add(new TestCaseVO("무조건 해피엔딩", "ㅁㅜㅈㅗㄱㅓㄴㅎㅐㅍㅣㅇㅔㄴㄷㅣㅇ/ㅁㅜㅈㅗㄱㅓㄴ/ㅎㅐㅍㅣㅇㅔㄴㄷㅣㅇ/anwhrjsgovldpseld/anwhrjs/govldpseld/ㅁㅈㄱㅎㅍㅇㄷ"));
-            testCase.add(new TestCaseVO("아디다스 운동화", "ㅇㅏㄷㅣㄷㅏㅅㅡㅇㅜㄴㄷㅗㅇㅎㅗㅏ/ㅇㅏㄷㅣㄷㅏㅅㅡ/ㅇㅜㄴㄷㅗㅇㅎㅗㅏ/dkelektmdnsehdghk/dkelektm/dnsehdghk/ㅇㄷㄷㅅㅇㄷㅎ"));
+            testCase.add(new TestCaseVO("무조건 해피엔딩", "ㅁㅈㄱ/ㅁㅜㅈㅗㄱㅓㄴㅎㅐㅍㅣㅇㅔㄴㄷㅣㅇ/ㅁㅜㅈㅗㄱㅓㄴ/ㅎㅐㅍㅣㅇㅔㄴㄷㅣㅇ/anwhrjsgovldpseld/anwhrjs/govldpseld/ㅎㅍㅇㄷ"));
+            testCase.add(new TestCaseVO("아디다스 운동화", "ㅇㄷㄷㅅ/ㅇㅏㄷㅣㄷㅏㅅㅡㅇㅜㄴㄷㅗㅇㅎㅗㅏ/ㅇㅏㄷㅣㄷㅏㅅㅡ/ㅇㅜㄴㄷㅗㅇㅎㅗㅏ/dkelektmdnsehdghk/dkelektm/dnsehdghk/ㅇㄷㅎ"));
             testCase.add(new TestCaseVO("투데이특가", "ㅌㅜㄷㅔㅇㅣㅌㅡㄱㄱㅏ/xnepdlxmrrk/ㅌㄷㅇㅌㄱ"));
 
         } else if (options.isMistype() == true && options.isChosung() == false) {

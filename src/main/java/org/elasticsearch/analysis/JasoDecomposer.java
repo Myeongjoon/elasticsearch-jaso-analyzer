@@ -21,6 +21,50 @@ public class JasoDecomposer {
 
     static String[] mistyping = {"ㅁ", "ㅠ", "ㅊ", "ㅇ", "ㄷ", "ㄹ", "ㅎ", "ㅗ", "ㅑ", "ㅓ", "ㅏ", "ㅣ", "ㅡ", "ㅜ", "ㅐ", "ㅔ", "ㅂ", "ㄱ", "ㄴ", "ㅅ", "ㅕ", "ㅍ", "ㅈ", "ㅌ", "ㅛ", "ㅋ"};
 
+    private void decomposeKor(char ch, StringBuffer korBuffer, StringBuffer chosungBuffer,
+                              TokenizerOptions options, StringBuffer engBuffer,
+                              int strLen, boolean firstCharType) {
+        //Unicode 값으로 환산한다.
+        int uniValue = ch - 0xAC00;
+
+        int jong = uniValue % 28;                   //종성
+        int cho = ((uniValue - jong) / 28) / 21;    //초성
+        int jung = ((uniValue - jong) / 28) % 21;   //중성
+
+        //한글초성
+        korBuffer.append(chosungKor[cho]);
+
+        //한글에 대한 초성처리 (일반적으로 색인시 초성을 담는다.)
+        if (options.isChosung() && firstCharType) {
+            //초성은 2자이상일때 포함
+            if (strLen >= 2)
+                chosungBuffer.append(chosungKor[cho]);
+        }
+
+        //한글문장에 대한 영문오타처리 (ㄱ -> r)
+        if (options.isMistype()) {
+            engBuffer.append(chosungEng[cho].toLowerCase());
+        }
+
+        //한글중성
+        korBuffer.append(jungsungKor[jung]);
+
+        //한글문장에 대한 영문오타처리 (ㅏ-> k)
+        if (options.isMistype()) {
+            engBuffer.append(jungsungEng[jung].toLowerCase());
+        }
+
+        //받침이 있으면
+        if (jong != 0) {
+            korBuffer.append(jongsungKor[jong]);
+
+            //한글문장에 대한 영문오타처리 (ㄲ -> R)
+            if (options.isMistype()) {
+                engBuffer.append(jongsungEng[jong].toLowerCase());
+            }
+        }
+    }
+
     public String runJasoDecompose(String originStr, TokenizerOptions options) {
 
         if (!originStr.isEmpty()) {
@@ -58,45 +102,11 @@ public class JasoDecomposer {
 
                 //가(AC00)~힣(D7A3) 에 속한 글자면 분해
                 if (ch >= 0xAC00 && ch <= 0xD7A3 && !jaso) {
-                    //Unicode 값으로 환산한다.
                     int uniValue = ch - 0xAC00;
-
                     jong = uniValue % 28;                   //종성
                     cho = ((uniValue - jong) / 28) / 21;    //초성
                     jung = ((uniValue - jong) / 28) % 21;   //중성
-
-                    //한글초성
-                    korBuffer.append(chosungKor[cho]);
-
-                    //한글에 대한 초성처리 (일반적으로 색인시 초성을 담는다.)
-                    if (options.isChosung() && firstCharType) {
-                        //초성은 2자이상일때 포함
-                        if (strLen >= 2)
-                            chosungBuffer.append(chosungKor[cho]);
-                    }
-
-                    //한글문장에 대한 영문오타처리 (ㄱ -> r)
-                    if (options.isMistype()) {
-                        engBuffer.append(chosungEng[cho].toLowerCase());
-                    }
-
-                    //한글중성
-                    korBuffer.append(jungsungKor[jung]);
-
-                    //한글문장에 대한 영문오타처리 (ㅏ-> k)
-                    if (options.isMistype()) {
-                        engBuffer.append(jungsungEng[jung].toLowerCase());
-                    }
-
-                    //받침이 있으면
-                    if (jong != 0) {
-                        korBuffer.append(jongsungKor[jong]);
-
-                        //한글문장에 대한 영문오타처리 (ㄲ -> R)
-                        if (options.isMistype()) {
-                            engBuffer.append(jongsungEng[jong].toLowerCase());
-                        }
-                    }
+                    decomposeKor(ch, korBuffer, chosungBuffer, options, engBuffer, strLen, firstCharType);
                 } else {
                     //white space인 경우 분리
                     if (chosungBuffer.length() > 0) {

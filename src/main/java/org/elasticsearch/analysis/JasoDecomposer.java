@@ -111,6 +111,10 @@ public class JasoDecomposer {
         }
     }
 
+    private boolean checkKor(char ch) {
+        return ch >= 0xAC00 && ch <= 0xD7A3;
+    }
+
     public String runJasoDecompose(String originStr, TokenizerOptions options) {
 
         if (!originStr.isEmpty()) {
@@ -147,7 +151,7 @@ public class JasoDecomposer {
                 char ch = termBuffer[i];
 
                 //가(AC00)~힣(D7A3) 에 속한 글자면 분해
-                if (ch >= 0xAC00 && ch <= 0xD7A3 && !jaso) {
+                if (checkKor(ch) && !jaso) {
                     decomposeKor(ch, korBuffer, chosungBuffer, options, engBuffer, strLen, firstCharType);
                 } else {
                     decomposeNonKor(ch, korBuffer, chosungBuffer, options, engBuffer, returnBuffer, jaso, hangul, mistypingBuffer, english);
@@ -156,7 +160,7 @@ public class JasoDecomposer {
                 //추가적인 예외상황으로 추가 토큰처리 (ㅗ디ㅣㅐ -> ㅗㄷㅣㅣㅐ 자소분해)
                 if (jaso) {
 
-                    if (ch >= 0xAC00 && ch <= 0xD7A3) {
+                    if (checkKor(ch)) {
                         //Unicode 값으로 환산한다.
                         int uniValue = ch - 0xAC00;
 
@@ -241,7 +245,7 @@ public class JasoDecomposer {
 
             //공백으로 분리된 문자열 (한글)
             if (korBuffer.length() > 0) {
-                returnBuffer.append(korBuffer.toString());
+                returnBuffer.append(korBuffer);
                 returnBuffer.append(" ");
             }
 
@@ -255,7 +259,7 @@ public class JasoDecomposer {
 
             //공백으로 분리된 문자열 (영문)
             if (engBuffer.length() > 0) {
-                returnBuffer.append(engBuffer.toString());
+                returnBuffer.append(engBuffer);
                 returnBuffer.append(" ");
             }
 
@@ -269,17 +273,17 @@ public class JasoDecomposer {
 
             //공백으로 분리된 문자열 (오타)
             if (mistypingBuffer.length() > 0) {
-                returnBuffer.append(mistypingBuffer.toString());
+                returnBuffer.append(mistypingBuffer);
                 returnBuffer.append(" ");
             }
 
             if (chosungBuffer.length() > 0) {
-                returnBuffer.append(chosungBuffer.toString());
+                returnBuffer.append(chosungBuffer);
                 returnBuffer.append(" ");
             }
 
             if (etcBuffer.length() > 0) {
-                returnBuffer.append(etcBuffer.toString());
+                returnBuffer.append(etcBuffer);
                 returnBuffer.append(" ");
             }
 

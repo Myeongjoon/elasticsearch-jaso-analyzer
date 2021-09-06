@@ -98,7 +98,7 @@ public class JasoDecomposer {
                         }
                     }
                 } else {
-
+                    //white space인 경우 분리
                     if (chosungBuffer.length() > 0) {
                         returnBuffer.append(chosungBuffer);
                         chosungBuffer = new StringBuffer();

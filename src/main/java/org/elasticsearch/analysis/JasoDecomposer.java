@@ -21,6 +21,52 @@ public class JasoDecomposer {
 
     static String[] mistyping = {"ㅁ", "ㅠ", "ㅊ", "ㅇ", "ㄷ", "ㄹ", "ㅎ", "ㅗ", "ㅑ", "ㅓ", "ㅏ", "ㅣ", "ㅡ", "ㅜ", "ㅐ", "ㅔ", "ㅂ", "ㄱ", "ㄴ", "ㅅ", "ㅕ", "ㅍ", "ㅈ", "ㅌ", "ㅛ", "ㅋ"};
 
+    private void decomposeNonKor(char ch, StringBuffer korBuffer, StringBuffer chosungBuffer,
+                                 TokenizerOptions options, StringBuffer engBuffer,
+                                 StringBuffer returnBuffer, boolean jaso, boolean hangul, StringBuffer mistypingBuffer, boolean english) {
+        //white space인 경우 분리
+        if (chosungBuffer.length() > 0) {
+            returnBuffer.append(chosungBuffer);
+            chosungBuffer.delete(0, chosungBuffer.length());
+            returnBuffer.append(" ");
+        }
+
+        if (options.isMistype()) {
+            if (!jaso) {
+                if (hangul) {
+                    korBuffer.append(ch);
+                }
+                engBuffer.append(ch);
+            }
+        } else {
+            if (!jaso) {
+                if (hangul) {
+                    korBuffer.append(ch);
+                } else {
+                    engBuffer.append(ch);
+                }
+            }
+        }
+
+        //영문문장에 대한 한글오타처리 (hello -> ㅗ디ㅣㅐ)
+        if (options.isMistype() && !hangul) {
+            int index;
+            if (ch >= 0x61 && ch <= 0x7A) {
+                //소문자
+                index = (int) ch - 97;
+                mistypingBuffer.append(mistyping[index]);
+            } else if (ch >= 0x41 && ch <= 0x5A) {
+                //대문자
+                index = (int) ch - 65;
+                mistypingBuffer.append(mistyping[index]);
+            } else {
+                if (hangul || english)
+                    mistypingBuffer.append(ch);
+            }
+        }
+    }
+
+
     private void decomposeKor(char ch, StringBuffer korBuffer, StringBuffer chosungBuffer,
                               TokenizerOptions options, StringBuffer engBuffer,
                               int strLen, boolean firstCharType) {
@@ -104,46 +150,7 @@ public class JasoDecomposer {
                 if (ch >= 0xAC00 && ch <= 0xD7A3 && !jaso) {
                     decomposeKor(ch, korBuffer, chosungBuffer, options, engBuffer, strLen, firstCharType);
                 } else {
-                    //white space인 경우 분리
-                    if (chosungBuffer.length() > 0) {
-                        returnBuffer.append(chosungBuffer);
-                        chosungBuffer = new StringBuffer();
-                        returnBuffer.append(" ");
-                    }
-
-                    if (options.isMistype()) {
-                        if (!jaso) {
-                            if (hangul) {
-                                korBuffer.append(ch);
-                            }
-                            engBuffer.append(ch);
-                        }
-                    } else {
-                        if (!jaso) {
-                            if (hangul) {
-                                korBuffer.append(ch);
-                            } else {
-                                engBuffer.append(ch);
-                            }
-                        }
-                    }
-
-                    //영문문장에 대한 한글오타처리 (hello -> ㅗ디ㅣㅐ)
-                    if (options.isMistype() && !hangul) {
-                        int index;
-                        if (ch >= 0x61 && ch <= 0x7A) {
-                            //소문자
-                            index = (int) ch - 97;
-                            mistypingBuffer.append(mistyping[index]);
-                        } else if (ch >= 0x41 && ch <= 0x5A) {
-                            //대문자
-                            index = (int) ch - 65;
-                            mistypingBuffer.append(mistyping[index]);
-                        } else {
-                            if (hangul || english)
-                                mistypingBuffer.append(ch);
-                        }
-                    }
+                    decomposeNonKor(ch, korBuffer, chosungBuffer, options, engBuffer, returnBuffer, jaso, hangul, mistypingBuffer, english);
                 }
 
                 //추가적인 예외상황으로 추가 토큰처리 (ㅗ디ㅣㅐ -> ㅗㄷㅣㅣㅐ 자소분해)

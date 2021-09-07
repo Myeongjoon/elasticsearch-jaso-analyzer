@@ -127,6 +127,60 @@ public class JasoDecomposer {
         }
     }
 
+    private void decomposeDoubleConsonant(char ch, StringBuffer etcBuffer) {
+        switch (ch) {
+            case 'ㄲ':
+                etcBuffer.append("ㄱㄱ");
+                break;
+            case 'ㄳ':
+                etcBuffer.append("ㄱㅅ");
+                break;
+            case 'ㄵ':
+                etcBuffer.append("ㄴㅈ");
+                break;
+            case 'ㄶ':
+                etcBuffer.append("ㄴㅎ");
+                break;
+            case 'ㄺ':
+                etcBuffer.append("ㄹㄱ");
+                break;
+            case 'ㄻ':
+                etcBuffer.append("ㄹㅁ");
+                break;
+            case 'ㄼ':
+                etcBuffer.append("ㄹㅂ");
+                break;
+            case 'ㄽ':
+                etcBuffer.append("ㄹㅅ");
+                break;
+            case 'ㄾ':
+                etcBuffer.append("ㄹㅌ");
+                break;
+            case 'ㄿ':
+                etcBuffer.append("ㄹㅍ");
+                break;
+            case 'ㅀ':
+                etcBuffer.append("ㄹㅎ");
+                break;
+            case 'ㅄ':
+                etcBuffer.append("ㅂㅅ");
+            case 'ㄸ':
+                etcBuffer.append("ㄷㄷ");
+                break;
+            case 'ㅃ':
+                etcBuffer.append("ㅂㅂ");
+                break;
+            case 'ㅆ':
+                etcBuffer.append("ㅅㅅ");
+                break;
+            case 'ㅉ':
+                etcBuffer.append("ㅈㅈ");
+                break;
+            default:
+                etcBuffer.append(ch);
+        }
+    }
+
     private boolean checkKor(char ch) {
         return ch >= 0xAC00 && ch <= 0xD7A3;
     }
@@ -178,58 +232,7 @@ public class JasoDecomposer {
                     if (checkKor(ch)) {
                         decomposeEtc(ch, etcBuffer);
                     } else if (isJaso(Character.toString(ch))) {
-                        //복자음 강제분리
-                        switch (ch) {
-                            case 'ㄲ':
-                                etcBuffer.append("ㄱㄱ");
-                                break;
-                            case 'ㄳ':
-                                etcBuffer.append("ㄱㅅ");
-                                break;
-                            case 'ㄵ':
-                                etcBuffer.append("ㄴㅈ");
-                                break;
-                            case 'ㄶ':
-                                etcBuffer.append("ㄴㅎ");
-                                break;
-                            case 'ㄺ':
-                                etcBuffer.append("ㄹㄱ");
-                                break;
-                            case 'ㄻ':
-                                etcBuffer.append("ㄹㅁ");
-                                break;
-                            case 'ㄼ':
-                                etcBuffer.append("ㄹㅂ");
-                                break;
-                            case 'ㄽ':
-                                etcBuffer.append("ㄹㅅ");
-                                break;
-                            case 'ㄾ':
-                                etcBuffer.append("ㄹㅌ");
-                                break;
-                            case 'ㄿ':
-                                etcBuffer.append("ㄹㅍ");
-                                break;
-                            case 'ㅀ':
-                                etcBuffer.append("ㄹㅎ");
-                                break;
-                            case 'ㅄ':
-                                etcBuffer.append("ㅂㅅ");
-                            case 'ㄸ':
-                                etcBuffer.append("ㄷㄷ");
-                                break;
-                            case 'ㅃ':
-                                etcBuffer.append("ㅂㅂ");
-                                break;
-                            case 'ㅆ':
-                                etcBuffer.append("ㅅㅅ");
-                                break;
-                            case 'ㅉ':
-                                etcBuffer.append("ㅈㅈ");
-                                break;
-                            default:
-                                etcBuffer.append(ch);
-                        }
+                        decomposeDoubleConsonant(ch, etcBuffer);
                     } else {
                         etcBuffer.append(ch);
                     }

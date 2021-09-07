@@ -214,9 +214,6 @@ public class JasoDecomposer {
 
             int strLen = originStr.length();
 
-            int cho;
-            int jung;
-            int jong;
             for (int i = 0; i < termBuffer.length; i++) {
                 char ch = termBuffer[i];
 

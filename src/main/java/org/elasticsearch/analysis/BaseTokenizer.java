@@ -116,6 +116,11 @@ public abstract class BaseTokenizer extends Tokenizer {
         termAtt.setLength(length);
         assert start != -1;
         //System.out.println(termAtt.toString());
+        while (!decomposer.offsetQueue.isEmpty()) {
+            String front = decomposer.offsetQueue.poll();
+            decomposer.AddOffsetQueue(front, correctOffset(start), correctOffset(start + length));
+        }
+
         offsetAtt.setOffset(correctOffset(start), finalOffset = correctOffset(start + length));
         return true;
     }

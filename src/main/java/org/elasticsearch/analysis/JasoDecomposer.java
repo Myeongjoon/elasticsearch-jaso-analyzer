@@ -11,6 +11,22 @@ import java.util.Queue;
  * @since 2016-02-10
  */
 public class JasoDecomposer {
+
+
+    public void AddOffsetQueue(String keyword, int start, int end) {
+        Offset offset = new Offset();
+        offset.start = start;
+        offset.end = end;
+        if (offsetMap.containsKey(keyword)) {
+            Queue<Offset> target = offsetMap.get(keyword);
+            target.add(offset);
+        } else {
+            Queue<Offset> queue = new LinkedList<>();
+            queue.add(offset);
+            offsetMap.put(keyword, queue);
+        }
+    }
+
     public JasoDecomposer() {
         this.offsetMap = new HashMap<>();
         this.offsetQueue = new LinkedList<>();

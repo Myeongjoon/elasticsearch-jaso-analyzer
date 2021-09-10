@@ -1,6 +1,7 @@
 package org.elasticsearch.analysis;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Queue;
 
 /**
@@ -11,8 +12,8 @@ import java.util.Queue;
  */
 public class JasoDecomposer {
     public JasoDecomposer() {
-        this.startOffsetMap = new HashMap<>();
-        this.endOffsetMap = new HashMap<>();
+        this.offsetMap = new HashMap<>();
+        this.offsetQueue = new LinkedList<>();
     }
 
     static class Offset {
@@ -20,8 +21,8 @@ public class JasoDecomposer {
         int end;
     }
 
-    public HashMap<String, Queue<Offset>> startOffsetMap;
-    public HashMap<String, Queue<Offset>> endOffsetMap;
+    public HashMap<String, Queue<Offset>> offsetMap;
+    public Queue<String> offsetQueue;
 
     //초성(19자) ㄱ ㄲ ㄴ ㄷ ㄸ ㄹ ㅁ ㅂ ㅃ ㅅ ㅆ ㅇ ㅈ ㅉ ㅊ ㅋ ㅌ ㅍ ㅎ
     static String[] chosungKor = {"ㄱ", "ㄱㄱ", "ㄴ", "ㄷ", "ㄷㄷ", "ㄹ", "ㅁ", "ㅂ", "ㅂㅂ", "ㅅ", "ㅅㅅ", "ㅇ", "ㅈ", "ㅈㅈ", "ㅊ", "ㅋ", "ㅌ", "ㅍ", "ㅎ"};
@@ -44,6 +45,7 @@ public class JasoDecomposer {
             returnBuffer.append(chosungBuffer);
             chosungBuffer.delete(0, chosungBuffer.length());
             returnBuffer.append(" ");
+            offsetQueue.add(chosungBuffer.toString());
         }
 
         if (options.isMistype()) {

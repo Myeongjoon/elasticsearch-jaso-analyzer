@@ -252,6 +252,7 @@ public class JasoDecomposer {
             if (korBuffer.indexOf(" ") != -1) {
                 if (korBuffer.length() > 0) {
                     returnBuffer.append(korBuffer.toString().replaceAll(" ", ""));
+                    offsetQueue.add(korBuffer.toString());
                     returnBuffer.append(" ");
                 }
             }
@@ -259,6 +260,7 @@ public class JasoDecomposer {
             //공백으로 분리된 문자열 (한글)
             if (korBuffer.length() > 0) {
                 returnBuffer.append(korBuffer);
+                offsetQueue.add(korBuffer.toString());
                 returnBuffer.append(" ");
             }
 
@@ -266,6 +268,7 @@ public class JasoDecomposer {
             if (engBuffer.indexOf(" ") != -1) {
                 if (engBuffer.length() > 0) {
                     returnBuffer.append(engBuffer.toString().replaceAll(" ", ""));
+                    offsetQueue.add(engBuffer.toString());
                     returnBuffer.append(" ");
                 }
             }
@@ -273,6 +276,7 @@ public class JasoDecomposer {
             //공백으로 분리된 문자열 (영문)
             if (engBuffer.length() > 0) {
                 returnBuffer.append(engBuffer);
+                offsetQueue.add(engBuffer.toString());
                 returnBuffer.append(" ");
             }
 
@@ -280,6 +284,7 @@ public class JasoDecomposer {
             if (mistypingBuffer.indexOf(" ") != -1) {
                 if (mistypingBuffer.length() > 0) {
                     returnBuffer.append(mistypingBuffer.toString().replaceAll(" ", ""));
+                    offsetQueue.add(returnBuffer.toString());
                     returnBuffer.append(" ");
                 }
             }
@@ -293,11 +298,13 @@ public class JasoDecomposer {
 
             if (chosungBuffer.length() > 0) {
                 returnBuffer.append(chosungBuffer);
+                offsetQueue.add(chosungBuffer.toString());
                 returnBuffer.append(" ");
             }
 
             if (etcBuffer.length() > 0) {
                 returnBuffer.append(etcBuffer);
+                offsetQueue.add(etcBuffer.toString());
                 returnBuffer.append(" ");
             }
 

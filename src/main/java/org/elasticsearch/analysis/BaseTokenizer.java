@@ -56,8 +56,8 @@ public abstract class BaseTokenizer extends Tokenizer {
         int end;
     }
 
-    private HashMap<String, Queue<Offset>> startOffset;
-    private HashMap<String, Queue<Offset>> endOffset;
+    private HashMap<String, Queue<Offset>> startOffsetMap;
+    private HashMap<String, Queue<Offset>> endOffsetMap;
 
     /**
      * lucene 4.2x의 경우 데이터가 있으면 자소분리 후 true가 떨어지나, 여기서는 false로 떨어져 ioBuffer사이즈 상태로 조건변경 (CharacterUtils.fill)
@@ -123,6 +123,7 @@ public abstract class BaseTokenizer extends Tokenizer {
 
         termAtt.setLength(length);
         assert start != -1;
+        //System.out.println(termAtt.toString());
         offsetAtt.setOffset(correctOffset(start), finalOffset = correctOffset(start + length));
         return true;
     }
@@ -168,6 +169,8 @@ public abstract class BaseTokenizer extends Tokenizer {
     @Override
     public void reset() throws IOException {
         super.reset();
+        startOffsetMap = new HashMap<>();
+        endOffsetMap = new HashMap<>();
         bufferIndex = 0;
         offset = 0;
         dataLen = 0;

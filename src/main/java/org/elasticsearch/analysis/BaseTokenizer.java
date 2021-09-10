@@ -8,6 +8,7 @@ import org.apache.lucene.analysis.CharacterUtils.CharacterBuffer;
 
 import java.io.*;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Queue;
 
 /**
@@ -24,6 +25,8 @@ public abstract class BaseTokenizer extends Tokenizer {
     private int offset = 0, bufferIndex = 0, dataLen = 0, finalOffset = 0;
     private static final int MAX_WORD_LEN = 2048;
     private static final int IO_BUFFER_SIZE = 4096;
+
+    public HashMap<String, Queue<Offset>> offsetMap;
 
     private CharTermAttribute termAtt;
     private OffsetAttribute offsetAtt;
@@ -49,6 +52,26 @@ public abstract class BaseTokenizer extends Tokenizer {
 
     protected int normalize(int c) {
         return c;
+    }
+
+
+    public void AddOffsetMap(String keyword, int start, int end) {
+        Offset offset = new Offset();
+        offset.start = start;
+        offset.end = end;
+        if (offsetMap.containsKey(keyword)) {
+            Queue<Offset> target = offsetMap.get(keyword);
+            target.add(offset);
+        } else {
+            Queue<Offset> queue = new LinkedList<>();
+            queue.add(offset);
+            offsetMap.put(keyword, queue);
+        }
+    }
+
+    static class Offset {
+        int start;
+        int end;
     }
 
     /**
@@ -115,13 +138,25 @@ public abstract class BaseTokenizer extends Tokenizer {
 
         termAtt.setLength(length);
         assert start != -1;
+        int end = start + length;
         //System.out.println(termAtt.toString());
         while (!decomposer.offsetQueue.isEmpty()) {
             String front = decomposer.offsetQueue.poll();
-            decomposer.AddOffsetQueue(front, correctOffset(start), correctOffset(start + length));
+            AddOffsetMap(front, correctOffset(start), finalOffset = correctOffset(end));
         }
 
-        offsetAtt.setOffset(correctOffset(start), finalOffset = correctOffset(start + length));
+        System.out.println(termAtt.toString());
+        if (offsetMap.containsKey(termAtt.toString()) && offsetMap.get(termAtt.toString()).size() > 0) {
+            int a = 1;
+            Offset temp = offsetMap.get(termAtt.toString()).poll();
+            offsetAtt.setOffset(temp.start, correctOffset(temp.end));
+            System.out.println(temp.start);
+            System.out.println(temp.end);
+            return true;
+        }
+        System.out.println(start);
+        System.out.println(end);
+        offsetAtt.setOffset(correctOffset(start), finalOffset = correctOffset(end));
         return true;
     }
 
@@ -166,6 +201,7 @@ public abstract class BaseTokenizer extends Tokenizer {
     @Override
     public void reset() throws IOException {
         super.reset();
+        this.offsetMap = new HashMap<>();
         bufferIndex = 0;
         offset = 0;
         dataLen = 0;

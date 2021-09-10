@@ -12,32 +12,9 @@ import java.util.Queue;
  */
 public class JasoDecomposer {
 
-
-    public void AddOffsetQueue(String keyword, int start, int end) {
-        Offset offset = new Offset();
-        offset.start = start;
-        offset.end = end;
-        if (offsetMap.containsKey(keyword)) {
-            Queue<Offset> target = offsetMap.get(keyword);
-            target.add(offset);
-        } else {
-            Queue<Offset> queue = new LinkedList<>();
-            queue.add(offset);
-            offsetMap.put(keyword, queue);
-        }
-    }
-
     public JasoDecomposer() {
-        this.offsetMap = new HashMap<>();
         this.offsetQueue = new LinkedList<>();
     }
-
-    static class Offset {
-        int start;
-        int end;
-    }
-
-    public HashMap<String, Queue<Offset>> offsetMap;
     public Queue<String> offsetQueue;
 
     //초성(19자) ㄱ ㄲ ㄴ ㄷ ㄸ ㄹ ㅁ ㅂ ㅃ ㅅ ㅆ ㅇ ㅈ ㅉ ㅊ ㅋ ㅌ ㅍ ㅎ
@@ -59,9 +36,9 @@ public class JasoDecomposer {
         //white space인 경우 분리
         if (chosungBuffer.length() > 0) {
             returnBuffer.append(chosungBuffer);
+            offsetQueue.add(chosungBuffer.toString());
             chosungBuffer.delete(0, chosungBuffer.length());
             returnBuffer.append(" ");
-            offsetQueue.add(chosungBuffer.toString());
         }
 
         if (options.isMistype()) {
@@ -310,6 +287,7 @@ public class JasoDecomposer {
             //공백으로 분리된 문자열 (오타)
             if (mistypingBuffer.length() > 0) {
                 returnBuffer.append(mistypingBuffer);
+                offsetQueue.add(mistypingBuffer.toString());
                 returnBuffer.append(" ");
             }
 

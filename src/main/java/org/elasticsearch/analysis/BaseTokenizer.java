@@ -7,6 +7,8 @@ import org.apache.lucene.analysis.CharacterUtils;
 import org.apache.lucene.analysis.CharacterUtils.CharacterBuffer;
 
 import java.io.*;
+import java.util.HashMap;
+import java.util.Queue;
 
 /**
  * Base 자소 토크나이저 구현
@@ -48,6 +50,14 @@ public abstract class BaseTokenizer extends Tokenizer {
     protected int normalize(int c) {
         return c;
     }
+
+    static class Offset {
+        int start;
+        int end;
+    }
+
+    private HashMap<String, Queue<Offset>> startOffset;
+    private HashMap<String, Queue<Offset>> endOffset;
 
     /**
      * lucene 4.2x의 경우 데이터가 있으면 자소분리 후 true가 떨어지나, 여기서는 false로 떨어져 ioBuffer사이즈 상태로 조건변경 (CharacterUtils.fill)

@@ -1,5 +1,8 @@
 package org.elasticsearch.analysis;
 
+import java.util.HashMap;
+import java.util.Queue;
+
 /**
  * 자동완성용 자소분해 (자소분해 with WhiteSpace)
  *
@@ -7,6 +10,18 @@ package org.elasticsearch.analysis;
  * @since 2016-02-10
  */
 public class JasoDecomposer {
+    public JasoDecomposer() {
+        this.startOffsetMap = new HashMap<>();
+        this.endOffsetMap = new HashMap<>();
+    }
+
+    static class Offset {
+        int start;
+        int end;
+    }
+
+    public HashMap<String, Queue<Offset>> startOffsetMap;
+    public HashMap<String, Queue<Offset>> endOffsetMap;
 
     //초성(19자) ㄱ ㄲ ㄴ ㄷ ㄸ ㄹ ㅁ ㅂ ㅃ ㅅ ㅆ ㅇ ㅈ ㅉ ㅊ ㅋ ㅌ ㅍ ㅎ
     static String[] chosungKor = {"ㄱ", "ㄱㄱ", "ㄴ", "ㄷ", "ㄷㄷ", "ㄹ", "ㅁ", "ㅂ", "ㅂㅂ", "ㅅ", "ㅅㅅ", "ㅇ", "ㅈ", "ㅈㅈ", "ㅊ", "ㅋ", "ㅌ", "ㅍ", "ㅎ"};

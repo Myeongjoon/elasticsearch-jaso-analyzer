@@ -31,7 +31,7 @@ public class JasoTokenizerTest extends TestCase {
 
         List<TestCaseVO> testCase = new ArrayList<TestCaseVO>();
 
-        if (options.isMistype() == true && options.isChosung() == true) {
+        if (options.isMistype() && options.isChosung()) {
 
             testCase.add(new TestCaseVO("최일규", "ㅊㅗㅣㅇㅣㄹㄱㅠ/chldlfrb/ㅊㅇㄱ"));
             testCase.add(new TestCaseVO("소녀시대", "ㅅㅗㄴㅕㅅㅣㄷㅐ/thsutleo/ㅅㄴㅅㄷ"));
@@ -41,7 +41,7 @@ public class JasoTokenizerTest extends TestCase {
             testCase.add(new TestCaseVO("아디다스 운동화", "ㅇㄷㄷㅅ/ㅇㅏㄷㅣㄷㅏㅅㅡㅇㅜㄴㄷㅗㅇㅎㅗㅏ/ㅇㅏㄷㅣㄷㅏㅅㅡ/ㅇㅜㄴㄷㅗㅇㅎㅗㅏ/dkelektmdnsehdghk/dkelektm/dnsehdghk/ㅇㄷㅎ"));
             testCase.add(new TestCaseVO("투데이특가", "ㅌㅜㄷㅔㅇㅣㅌㅡㄱㄱㅏ/xnepdlxmrrk/ㅌㄷㅇㅌㄱ"));
 
-        } else if (options.isMistype() == true && options.isChosung() == false) {
+        } else if (options.isMistype() && !options.isChosung()) {
 
             testCase.add(new TestCaseVO("최일규", "ㅊㅗㅣㅇㅣㄹㄱㅠ/chldlfrb"));
             testCase.add(new TestCaseVO("소녀시대", "ㅅㅗㄴㅕㅅㅣㄷㅐ/thsutleo"));
@@ -51,7 +51,7 @@ public class JasoTokenizerTest extends TestCase {
             testCase.add(new TestCaseVO("아디다스 운동화", "ㅇㅏㄷㅣㄷㅏㅅㅡㅇㅜㄴㄷㅗㅇㅎㅗㅏ/ㅇㅏㄷㅣㄷㅏㅅㅡ/ㅇㅜㄴㄷㅗㅇㅎㅗㅏ/dkelektmdnsehdghk/dkelektm/dnsehdghk"));
             testCase.add(new TestCaseVO("투데이특가", "ㅌㅜㄷㅔㅇㅣㅌㅡㄱㄱㅏ/xnepdlxmrrk"));
 
-        } else if (options.isMistype() == false && options.isChosung() == true) {
+        } else if (!options.isMistype() && options.isChosung()) {
 
             testCase.add(new TestCaseVO("최일규", "ㅊㅗㅣㅇㅣㄹㄱㅠ/ㅊㅇㄱ", "0,3/0,3"));
             testCase.add(new TestCaseVO("소녀시대", "ㅅㅗㄴㅕㅅㅣㄷㅐ/ㅅㄴㅅㄷ"));
@@ -62,7 +62,7 @@ public class JasoTokenizerTest extends TestCase {
             testCase.add(new TestCaseVO("투데이특가", "ㅌㅜㄷㅔㅇㅣㅌㅡㄱㄱㅏ/ㅌㄷㅇㅌㄱ"));
             testCase.add(new TestCaseVO("안녕 나의 이름은 김명준", "ㅇㄴ/ㄴㅇ/ㅇㄹㅇ/ㅇㅏㄴㄴㅕㅇㄴㅏㅇㅡㅣㅇㅣㄹㅡㅁㅇㅡㄴㄱㅣㅁㅁㅕㅇㅈㅜㄴ/ㅇㅏㄴㄴㅕㅇ/ㄴㅏㅇㅡㅣ/ㅇㅣㄹㅡㅁㅇㅡㄴ/ㄱㅣㅁㅁㅕㅇㅈㅜㄴ/ㄱㅁㅈ"));
 
-        } else if (options.isMistype() == false && options.isChosung() == false) {
+        } else if (!options.isMistype() && !options.isChosung()) {
 
             testCase.add(new TestCaseVO("최일규", "ㅊㅗㅣㅇㅣㄹㄱㅠ"));
             testCase.add(new TestCaseVO("소녀시대", "ㅅㅗㄴㅕㅅㅣㄷㅐ"));

@@ -129,7 +129,6 @@ public abstract class BaseTokenizer extends Tokenizer {
 
         System.out.println(termAtt.toString());
         if (offsetMap.containsKey(termAtt.toString()) && offsetMap.get(termAtt.toString()).size() > 0) {
-            int a = 1;
             Offset temp = offsetMap.get(termAtt.toString()).poll();
             offsetAtt.setOffset(temp.start, correctOffset(temp.end));
             System.out.println(temp.start);

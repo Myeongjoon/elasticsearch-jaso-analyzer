@@ -37,7 +37,7 @@ public class JasoTokenizerTest extends TestCase {
             //testCase.add(new TestCaseVO("소녀시대", "ㅅㅗㄴㅕㅅㅣㄷㅐ/thsutleo/ㅅㄴㅅㄷ"));
             //testCase.add(new TestCaseVO("Hello", "hello/ㅗㄷㅣㅣㅐ"));
             //testCase.add(new TestCaseVO("Hello~", "hello~/ㅗㄷㅣㅣㅐ~"));
-            testCase.add(new TestCaseVO("무조건 해피엔딩", "ㅁㅈㄱ/ㅁㅜㅈㅗㄱㅓㄴㅎㅐㅍㅣㅇㅔㄴㄷㅣㅇ/ㅁㅜㅈㅗㄱㅓㄴ/ㅎㅐㅍㅣㅇㅔㄴㄷㅣㅇ/anwhrjsgovldpseld/anwhrjs/govldpseld/ㅎㅍㅇㄷ"));
+            testCase.add(new TestCaseVO("무조건 해피엔딩", "ㅁㅜㅈㅗㄱㅓㄴ/anwhrjs/ㅁㅈㄱ/ㅎㅐㅍㅣㅇㅔㄴㄷㅣㅇ/govldpseld/ㅎㅍㅇㄷ"));
             //testCase.add(new TestCaseVO("아디다스 운동화", "ㅇㄷㄷㅅ/ㅇㅏㄷㅣㄷㅏㅅㅡㅇㅜㄴㄷㅗㅇㅎㅗㅏ/ㅇㅏㄷㅣㄷㅏㅅㅡ/ㅇㅜㄴㄷㅗㅇㅎㅗㅏ/dkelektmdnsehdghk/dkelektm/dnsehdghk/ㅇㄷㅎ"));
             //testCase.add(new TestCaseVO("투데이특가", "ㅌㅜㄷㅔㅇㅣㅌㅡㄱㄱㅏ/xnepdlxmrrk/ㅌㄷㅇㅌㄱ"));
 

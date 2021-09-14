@@ -41,7 +41,7 @@ public class JasoDecomposer {
         //white space인 경우 분리
         if (chosungBuffer.length() > 0) {
             returnBuffer.append(chosungBuffer);
-            offsetQueue.add(chosungBuffer.toString());
+            offsetMap.addOffsetMap(chosungBuffer.toString(), start, end);
             chosungBuffer.delete(0, chosungBuffer.length());
             returnBuffer.append(" ");
         }
@@ -239,6 +239,7 @@ public class JasoDecomposer {
                     decomposeKor(ch, korBuffer, chosungBuffer, options, engBuffer, strLen, firstCharType);
                 } else {
                     decomposeNonKor(start, end, ch, korBuffer, chosungBuffer, options, engBuffer, returnBuffer, jaso, hangul, mistypingBuffer, english);
+                    start = end + 1;
                 }
 
                 //추가적인 예외상황으로 추가 토큰처리 (ㅗ디ㅣㅐ -> ㅗㄷㅣㅣㅐ 자소분해)
@@ -302,12 +303,7 @@ public class JasoDecomposer {
                 offsetQueue.add(mistypingBuffer.toString());
                 returnBuffer.append(" ");
             }
-
-            if (chosungBuffer.length() > 0) {
-                returnBuffer.append(chosungBuffer);
-                offsetQueue.add(chosungBuffer.toString());
-                returnBuffer.append(" ");
-            }
+            flushBuffer(chosungBuffer, returnBuffer, start, end);
 
             if (etcBuffer.length() > 0) {
                 returnBuffer.append(etcBuffer);
@@ -318,6 +314,14 @@ public class JasoDecomposer {
             return returnBuffer.toString().trim();
         } else {
             return "";
+        }
+    }
+
+    private void flushBuffer(StringBuffer targetBuffer, StringBuffer returnBuffer, Integer start, Integer end) {
+        if (targetBuffer.length() > 0) {
+            returnBuffer.append(targetBuffer);
+            offsetMap.addOffsetMap(targetBuffer.toString(), start, end);
+            returnBuffer.append(" ");
         }
     }
 

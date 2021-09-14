@@ -1,6 +1,5 @@
 package org.elasticsearch.analysis;
 
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -15,6 +14,7 @@ public class JasoDecomposer {
     public JasoDecomposer() {
         this.offsetQueue = new LinkedList<>();
     }
+
     public Queue<String> offsetQueue;
 
     //초성(19자) ㄱ ㄲ ㄴ ㄷ ㄸ ㄹ ㅁ ㅂ ㅃ ㅅ ㅆ ㅇ ㅈ ㅉ ㅊ ㅋ ㅌ ㅍ ㅎ
@@ -30,7 +30,7 @@ public class JasoDecomposer {
 
     static String[] mistyping = {"ㅁ", "ㅠ", "ㅊ", "ㅇ", "ㄷ", "ㄹ", "ㅎ", "ㅗ", "ㅑ", "ㅓ", "ㅏ", "ㅣ", "ㅡ", "ㅜ", "ㅐ", "ㅔ", "ㅂ", "ㄱ", "ㄴ", "ㅅ", "ㅕ", "ㅍ", "ㅈ", "ㅌ", "ㅛ", "ㅋ"};
 
-    private void decomposeNonKor(char ch, StringBuffer korBuffer, StringBuffer chosungBuffer,
+    private void decomposeNonKor(Integer start, Integer end, char ch, StringBuffer korBuffer, StringBuffer chosungBuffer,
                                  TokenizerOptions options, StringBuffer engBuffer,
                                  StringBuffer returnBuffer, boolean jaso, boolean hangul, StringBuffer mistypingBuffer, boolean english) {
         //white space인 경우 분리
@@ -223,15 +223,17 @@ public class JasoDecomposer {
             boolean english = isEnglish(originStr);
 
             int strLen = originStr.length();
-
+            Integer start = 0;
+            Integer end = 0;
             for (int i = 0; i < termBuffer.length; i++) {
+                end = i;
                 char ch = termBuffer[i];
 
                 //가(AC00)~힣(D7A3) 에 속한 글자면 분해
                 if (checkKor(ch) && !jaso) {
                     decomposeKor(ch, korBuffer, chosungBuffer, options, engBuffer, strLen, firstCharType);
                 } else {
-                    decomposeNonKor(ch, korBuffer, chosungBuffer, options, engBuffer, returnBuffer, jaso, hangul, mistypingBuffer, english);
+                    decomposeNonKor(start, end, ch, korBuffer, chosungBuffer, options, engBuffer, returnBuffer, jaso, hangul, mistypingBuffer, english);
                 }
 
                 //추가적인 예외상황으로 추가 토큰처리 (ㅗ디ㅣㅐ -> ㅗㄷㅣㅣㅐ 자소분해)

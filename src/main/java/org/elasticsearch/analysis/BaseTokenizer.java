@@ -1,15 +1,12 @@
 package org.elasticsearch.analysis;
 
+import org.apache.lucene.analysis.CharacterUtils;
+import org.apache.lucene.analysis.CharacterUtils.CharacterBuffer;
 import org.apache.lucene.analysis.Tokenizer;
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
 import org.apache.lucene.analysis.tokenattributes.OffsetAttribute;
-import org.apache.lucene.analysis.CharacterUtils;
-import org.apache.lucene.analysis.CharacterUtils.CharacterBuffer;
 
 import java.io.*;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Queue;
 
 /**
  * Base 자소 토크나이저 구현
@@ -26,7 +23,7 @@ public abstract class BaseTokenizer extends Tokenizer {
     private static final int MAX_WORD_LEN = 2048;
     private static final int IO_BUFFER_SIZE = 4096;
 
-    public HashMap<String, Queue<Offset>> offsetMap;
+    public OffsetMap offsetMap;
 
     private CharTermAttribute termAtt;
     private OffsetAttribute offsetAtt;
@@ -52,21 +49,6 @@ public abstract class BaseTokenizer extends Tokenizer {
 
     protected int normalize(int c) {
         return c;
-    }
-
-
-    public void AddOffsetMap(String keyword, int start, int end) {
-        Offset offset = new Offset();
-        offset.start = start;
-        offset.end = end;
-        if (offsetMap.containsKey(keyword)) {
-            Queue<Offset> target = offsetMap.get(keyword);
-            target.add(offset);
-        } else {
-            Queue<Offset> queue = new LinkedList<>();
-            queue.add(offset);
-            offsetMap.put(keyword, queue);
-        }
     }
 
     static class Offset {
@@ -142,7 +124,7 @@ public abstract class BaseTokenizer extends Tokenizer {
         //System.out.println(termAtt.toString());
         while (!decomposer.offsetQueue.isEmpty()) {
             String front = decomposer.offsetQueue.poll();
-            AddOffsetMap(front, correctOffset(start), finalOffset = correctOffset(end));
+            offsetMap.addOffsetMap(front, correctOffset(start), finalOffset = correctOffset(end));
         }
 
         System.out.println(termAtt.toString());
@@ -173,7 +155,7 @@ public abstract class BaseTokenizer extends Tokenizer {
      * @param options
      * @return
      */
-    public static Reader jasoDecompose(Reader in, TokenizerOptions options, HashMap<String, Queue<Offset>> offsetMap) {
+    public static Reader jasoDecompose(Reader in, TokenizerOptions options, OffsetMap offsetMap) {
         Writer writer = new StringWriter();
         decomposer = new JasoDecomposer();
         decomposer.setOffsetMap(offsetMap);
@@ -202,7 +184,7 @@ public abstract class BaseTokenizer extends Tokenizer {
     @Override
     public void reset() throws IOException {
         super.reset();
-        this.offsetMap = new HashMap<>();
+        this.offsetMap = new OffsetMap();
         bufferIndex = 0;
         offset = 0;
         dataLen = 0;

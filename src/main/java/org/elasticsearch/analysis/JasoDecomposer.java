@@ -1,6 +1,5 @@
 package org.elasticsearch.analysis;
 
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -11,9 +10,9 @@ import java.util.Queue;
  * @since 2016-02-10
  */
 public class JasoDecomposer {
-    HashMap<String, Queue<BaseTokenizer.Offset>> offsetMap;
+    OffsetMap offsetMap;
 
-    public void setOffsetMap(HashMap<String, Queue<BaseTokenizer.Offset>> offsetMap) {
+    public void setOffsetMap(OffsetMap offsetMap) {
         this.offsetMap = offsetMap;
     }
 

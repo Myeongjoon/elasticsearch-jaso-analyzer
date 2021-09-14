@@ -35,7 +35,46 @@ public class JasoDecomposer {
 
     static String[] mistyping = {"ㅁ", "ㅠ", "ㅊ", "ㅇ", "ㄷ", "ㄹ", "ㅎ", "ㅗ", "ㅑ", "ㅓ", "ㅏ", "ㅣ", "ㅡ", "ㅜ", "ㅐ", "ㅔ", "ㅂ", "ㄱ", "ㄴ", "ㅅ", "ㅕ", "ㅍ", "ㅈ", "ㅌ", "ㅛ", "ㅋ"};
 
-    private void decomposeNonKor(Integer start, Integer end, char ch, StringBuffer korBuffer, StringBuffer chosungBuffer,
+    private void decomposeNonKor(char ch, StringBuffer korBuffer,
+                                 TokenizerOptions options, StringBuffer engBuffer,
+                                 boolean jaso, boolean hangul, StringBuffer mistypingBuffer, boolean english) {
+
+        if (options.isMistype()) {
+            if (!jaso) {
+                if (hangul) {
+                    korBuffer.append(ch);
+                }
+                engBuffer.append(ch);
+            }
+        } else {
+            if (!jaso) {
+                if (hangul) {
+                    korBuffer.append(ch);
+                } else {
+                    engBuffer.append(ch);
+                }
+            }
+        }
+
+        //영문문장에 대한 한글오타처리 (hello -> ㅗ디ㅣㅐ)
+        if (options.isMistype() && !hangul) {
+            int index;
+            if (ch >= 0x61 && ch <= 0x7A) {
+                //소문자
+                index = (int) ch - 97;
+                mistypingBuffer.append(mistyping[index]);
+            } else if (ch >= 0x41 && ch <= 0x5A) {
+                //대문자
+                index = (int) ch - 65;
+                mistypingBuffer.append(mistyping[index]);
+            } else {
+                if (hangul || english)
+                    mistypingBuffer.append(ch);
+            }
+        }
+    }
+
+    private void decomposeWhiteSpace(Integer start, Integer end, char ch, StringBuffer korBuffer, StringBuffer chosungBuffer,
                                  TokenizerOptions options, StringBuffer engBuffer,
                                  StringBuffer returnBuffer, boolean jaso, boolean hangul, StringBuffer mistypingBuffer, boolean english,
                                  StringBuffer etcBuffer) {
@@ -186,6 +225,13 @@ public class JasoDecomposer {
         return ch >= 0xAC00 && ch <= 0xD7A3;
     }
 
+    private boolean detectWhiteSpace(char ch) {
+        if (ch == ' ') {
+            return true;
+        }
+        return false;
+    }
+
     public String runJasoDecompose(String originStr, TokenizerOptions options) {
 
         if (!originStr.isEmpty()) {
@@ -223,9 +269,11 @@ public class JasoDecomposer {
                 //가(AC00)~힣(D7A3) 에 속한 글자면 분해
                 if (checkKor(ch) && !jaso) {
                     decomposeKor(ch, korBuffer, chosungBuffer, options, engBuffer, strLen, firstCharType);
+                } else if (detectWhiteSpace(ch)) {
+                    decomposeWhiteSpace(start, end, ch, korBuffer, chosungBuffer, options, engBuffer, returnBuffer, jaso, hangul, mistypingBuffer, english, etcBuffer);
+                    start = end;
                 } else {
-                    decomposeNonKor(start, end, ch, korBuffer, chosungBuffer, options, engBuffer, returnBuffer, jaso, hangul, mistypingBuffer, english, etcBuffer);
-                    start = end + 1;
+                    decomposeNonKor(ch, korBuffer, options, engBuffer, jaso, hangul, mistypingBuffer, english);
                 }
 
                 //추가적인 예외상황으로 추가 토큰처리 (ㅗ디ㅣㅐ -> ㅗㄷㅣㅣㅐ 자소분해)
@@ -240,41 +288,9 @@ public class JasoDecomposer {
                 }
             }
 
-            //결과 조합
-
-            /*
-            //공백을 붙인 전체 문자열 (한글)
-            if (korBuffer.indexOf(" ") != -1) {
-                if (korBuffer.length() > 0) {
-                    returnBuffer.append(korBuffer.toString().replaceAll(" ", ""));
-                    offsetQueue.add(korBuffer.toString());
-                    returnBuffer.append(" ");
-                }
-            }*/
-
             flushBuffer(korBuffer, returnBuffer, start, end, false);
 
-            /*
-            //공백을 붙인 전체 문자열 (영문)
-            if (engBuffer.indexOf(" ") != -1) {
-                if (engBuffer.length() > 0) {
-                    returnBuffer.append(engBuffer.toString().replaceAll(" ", ""));
-                    offsetQueue.add(engBuffer.toString());
-                    returnBuffer.append(" ");
-                }
-            }*/
-
             flushBuffer(engBuffer, returnBuffer, start, end, false);
-
-            /*
-            //공백을 붙인 전체 문자열 (오타)
-            if (mistypingBuffer.indexOf(" ") != -1) {
-                if (mistypingBuffer.length() > 0) {
-                    returnBuffer.append(mistypingBuffer.toString().replaceAll(" ", ""));
-                    offsetQueue.add(returnBuffer.toString());
-                    returnBuffer.append(" ");
-                }
-            }*/
 
             flushBuffer(mistypingBuffer, returnBuffer, start, end, false);
 

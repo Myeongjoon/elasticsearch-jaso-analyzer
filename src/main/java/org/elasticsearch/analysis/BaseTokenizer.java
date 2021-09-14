@@ -91,7 +91,7 @@ public abstract class BaseTokenizer extends Tokenizer {
             if (bufferIndex >= dataLen) {
 
                 offset += dataLen;
-                boolean isDecompose = charUtils.fill(ioBuffer, jasoDecompose(input, this.options));
+                boolean isDecompose = charUtils.fill(ioBuffer, jasoDecompose(input, this.options, this.offsetMap));
 
                 //버퍼사이즈가 있으면 분석한다. (return false일때까지... 재귀호출)
                 if (ioBuffer.getLength() == 0) {
@@ -173,9 +173,10 @@ public abstract class BaseTokenizer extends Tokenizer {
      * @param options
      * @return
      */
-    public static Reader jasoDecompose(Reader in, TokenizerOptions options) {
+    public static Reader jasoDecompose(Reader in, TokenizerOptions options, HashMap<String, Queue<Offset>> offsetMap) {
         Writer writer = new StringWriter();
         decomposer = new JasoDecomposer();
+        decomposer.setOffsetMap(offsetMap);
         char[] buffer = new char[2048];
         String temp;
 

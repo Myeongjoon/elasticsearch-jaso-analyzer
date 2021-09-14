@@ -265,12 +265,7 @@ public class JasoDecomposer {
                 }
             }
 
-            //공백으로 분리된 문자열 (한글)
-            if (korBuffer.length() > 0) {
-                returnBuffer.append(korBuffer);
-                offsetQueue.add(korBuffer.toString());
-                returnBuffer.append(" ");
-            }
+            flushBuffer(korBuffer, returnBuffer, start, end);
 
             //공백을 붙인 전체 문자열 (영문)
             if (engBuffer.indexOf(" ") != -1) {
@@ -281,12 +276,7 @@ public class JasoDecomposer {
                 }
             }
 
-            //공백으로 분리된 문자열 (영문)
-            if (engBuffer.length() > 0) {
-                returnBuffer.append(engBuffer);
-                offsetQueue.add(engBuffer.toString());
-                returnBuffer.append(" ");
-            }
+            flushBuffer(engBuffer, returnBuffer, start, end);
 
             //공백을 붙인 전체 문자열 (오타)
             if (mistypingBuffer.indexOf(" ") != -1) {
@@ -297,19 +287,11 @@ public class JasoDecomposer {
                 }
             }
 
-            //공백으로 분리된 문자열 (오타)
-            if (mistypingBuffer.length() > 0) {
-                returnBuffer.append(mistypingBuffer);
-                offsetQueue.add(mistypingBuffer.toString());
-                returnBuffer.append(" ");
-            }
+            flushBuffer(mistypingBuffer, returnBuffer, start, end);
+
             flushBuffer(chosungBuffer, returnBuffer, start, end);
 
-            if (etcBuffer.length() > 0) {
-                returnBuffer.append(etcBuffer);
-                offsetQueue.add(etcBuffer.toString());
-                returnBuffer.append(" ");
-            }
+            flushBuffer(etcBuffer, returnBuffer, start, end);
 
             return returnBuffer.toString().trim();
         } else {

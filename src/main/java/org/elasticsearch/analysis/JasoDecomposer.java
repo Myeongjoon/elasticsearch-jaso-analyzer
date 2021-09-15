@@ -75,9 +75,9 @@ public class JasoDecomposer {
     }
 
     private void decomposeWhiteSpace(Integer start, Integer end, char ch, StringBuffer korBuffer, StringBuffer chosungBuffer,
-                                 TokenizerOptions options, StringBuffer engBuffer,
-                                 StringBuffer returnBuffer, boolean jaso, boolean hangul, StringBuffer mistypingBuffer, boolean english,
-                                 StringBuffer etcBuffer) {
+                                     TokenizerOptions options, StringBuffer engBuffer,
+                                     StringBuffer returnBuffer, boolean jaso, boolean hangul, StringBuffer mistypingBuffer, boolean english,
+                                     StringBuffer etcBuffer) {
         flushBuffer(korBuffer, returnBuffer, start, end, true);
 
         flushBuffer(engBuffer, returnBuffer, start, end, true);
@@ -271,7 +271,7 @@ public class JasoDecomposer {
                     decomposeKor(ch, korBuffer, chosungBuffer, options, engBuffer, strLen, firstCharType);
                 } else if (detectWhiteSpace(ch)) {
                     decomposeWhiteSpace(start, end, ch, korBuffer, chosungBuffer, options, engBuffer, returnBuffer, jaso, hangul, mistypingBuffer, english, etcBuffer);
-                    start = end;
+                    start = end + 1;
                 } else {
                     decomposeNonKor(ch, korBuffer, options, engBuffer, jaso, hangul, mistypingBuffer, english);
                 }
@@ -287,6 +287,7 @@ public class JasoDecomposer {
                     }
                 }
             }
+            end = end + 1;
 
             flushBuffer(korBuffer, returnBuffer, start, end, false);
 

@@ -40,6 +40,7 @@ public class JasoTokenizerTest extends TestCase {
             testCase.add(new TestCaseVO("무조건 해피엔딩", "ㅁㅜㅈㅗㄱㅓㄴ/anwhrjs/ㅁㅈㄱ/ㅎㅐㅍㅣㅇㅔㄴㄷㅣㅇ/govldpseld/ㅎㅍㅇㄷ"));
             testCase.add(new TestCaseVO("아디다스 운동화", "ㅇㅏㄷㅣㄷㅏㅅㅡ/dkelektm/ㅇㄷㄷㅅ/ㅇㅜㄴㄷㅗㅇㅎㅗㅏ/dnsehdghk/ㅇㄷㅎ"));
             testCase.add(new TestCaseVO("투데이특가", "ㅌㅜㄷㅔㅇㅣㅌㅡㄱㄱㅏ/xnepdlxmrrk/ㅌㄷㅇㅌㄱ"));
+            testCase.add(new TestCaseVO("안녕 하세 요쿠르", "ㅇㅏㄴㄴㅕㅇ/dkssud/ㅇㄴ/ㅎㅏㅅㅔ/gktp/ㅎㅅ/ㅇㅛㅋㅜㄹㅡ/dyznfm/ㅇㅋㄹ"));
 
         } else if (options.isMistype() && !options.isChosung()) {
 
